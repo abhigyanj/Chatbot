@@ -25,7 +25,14 @@ class ChatBot:
         self.output = None
         self.training = None
 
-    def load_data(self, file_name="data.pickle"):
+    def load_data(self, file_name):
+        """
+        loads the data, also gets model ready
+
+        :param: file_name: where file is located
+        :return: None
+        """
+
         with open(file_name, "rb") as data:
             self.words, self.labels, self.training, self.output = pickle.load(
                 data)
@@ -41,11 +48,24 @@ class ChatBot:
 
         self.model = tflearn.DNN(net)
 
-    def load_intents(self, file_name="intents.json"):
+    def load_intents(self, file_name):
+        """
+        loads the intents
+
+        :param: file_name: where file is located
+        :return: None
+        """
+
         with open(file_name, "r") as file:
             self.data = json.load(file)
 
     def make_data(self):
+        """
+        makes the processed data for the model
+
+        :return: None
+        """
+
         self.words = []
         self.labels = []
         docs_x = []
@@ -103,19 +123,46 @@ class ChatBot:
 
         self.model = tflearn.DNN(net)
 
-    def save_data(self, file_name="data.pickle"):
+    def save_data(self, file_name):
+        """
+        saves the data
+
+        :param: file_name: where to save file
+        :return: None
+        """
+
         with open(file_name, "wb") as data:
             pickle.dump((self.words, self.labels,
                          self.training, self.output), data)
 
     def make_model(self, epochs, batch_size=8, show_metric=False):
+        """
+        fits (traims) the model
+
+        :param: epochs: amount of epochs
+        :param: batch_size: batch size when model is being fitted, default 8
+        :param: show_metric: to show metrics when model is being fitted, default False
+        :return: None
+        """
+
         self.model.fit(self.training, self.output, n_epoch=epochs,
                        batch_size=batch_size, show_metric=show_metric)
 
-    def save_model(self, file_name="model.tflearn"):
+    def save_model(self, file_name):
+        """
+        saves the model
+
+        :param: file_name: where to save file
+        :return: None
+        """
+
         self.model.save(file_name)
 
     def _bag_of_words(self, s, words):
+        """
+        internal method for chatbot
+        """
+
         bag = [0 for _ in range(len(words))]
 
         s_words = nltk.word_tokenize(s)
@@ -128,13 +175,33 @@ class ChatBot:
 
         return numpy.array(bag)
 
-    def load_model(self, file_name="model.tflearn"):
+    def load_model(self, file_name):
+        """
+        loads the model
+
+        :param: file_name: where file is located
+        :return: None
+        """
+
         self.model.load(file_name)
 
     def predict(self, text):
+        """
+        this function is for using the chatbot 
+        to predict based on the text provided. 
+        If chatbot is sure enough about the result
+        if will return a random response from the 
+        list of response in the intents, if not sure
+        enough, it will return "I didn't understand"
+
+        :param text: text for chatbot to predict on 
+        :return: str
+        """
+
         results = self.model.predict(
             [self._bag_of_words(text, self.words)])[0]
         results_index = numpy.argmax(results)
+
         tag = self.labels[results_index]
 
         if results[results_index] > 0.5:
@@ -144,13 +211,13 @@ class ChatBot:
 
                     resp = random.choice(responses)
                     return resp
-
         else:
             return "I didn't understand"
 
 
-chat_bot = ChatBot()
+# Setting Up Chatbot
 
+chat_bot = ChatBot()
 chat_bot.load_intents(
     file_name=os.path.join("chat", "intent", "intents.json"))
 chat_bot.load_data(file_name=os.path.join("chat", "data", "data.pickle"))
