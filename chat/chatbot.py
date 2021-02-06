@@ -29,7 +29,7 @@ class ChatBot:
         """
         loads the data, also gets model ready
 
-        :param: file_name: where file is located
+        :param file_name: where file is located
         :return: None
         """
 
@@ -52,7 +52,7 @@ class ChatBot:
         """
         loads the intents
 
-        :param: file_name: where file is located
+        :param file_name: where file is located
         :return: None
         """
 
@@ -127,7 +127,7 @@ class ChatBot:
         """
         saves the data
 
-        :param: file_name: where to save file
+        :param file_name: where to save file
         :return: None
         """
 
@@ -139,9 +139,9 @@ class ChatBot:
         """
         fits (traims) the model
 
-        :param: epochs: amount of epochs
-        :param: batch_size: batch size when model is being fitted, default 8
-        :param: show_metric: to show metrics when model is being fitted, default False
+        :param epochs: amount of epochs
+        :param batch_size: batch size when model is being fitted, default 8
+        :param show_metric: to show metrics when model is being fitted, default False
         :return: None
         """
 
@@ -152,7 +152,7 @@ class ChatBot:
         """
         saves the model
 
-        :param: file_name: where to save file
+        :param file_name: where to save file
         :return: None
         """
 
@@ -179,7 +179,7 @@ class ChatBot:
         """
         loads the model
 
-        :param: file_name: where file is located
+        :param file_name: where file is located
         :return: None
         """
 
