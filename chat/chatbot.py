@@ -12,25 +12,23 @@ from tensorflow.python.framework import ops
 
 class ChatBot:
     def __init__(self):
+        """
+        Adding variables needed for later use
+        """
+
         self.stemmer = LancasterStemmer()
+
         self.data = None
         self.model = None
         self.words = None
         self.labels = None
         self.output = None
         self.training = None
-        self.model_saved = False
-        self.chat_history = []
-        self.loaded_intent = False
-        self.model_trained = False
-        self.loaded_model_data = False
 
     def load_data(self, file_name="data.pickle"):
         with open(file_name, "rb") as data:
             self.words, self.labels, self.training, self.output = pickle.load(
                 data)
-
-        self.loaded_model_data = True
 
         ops.reset_default_graph()
 
@@ -94,9 +92,6 @@ class ChatBot:
         self.training = numpy.array(self.training)
         self.output = numpy.array(self.output)
 
-        self.loaded_intent = True
-        self.loaded_model_data = True
-
         ops.reset_default_graph()
 
         net = tflearn.input_data(shape=[None, len(self.training[0])])
@@ -117,20 +112,8 @@ class ChatBot:
         self.model.fit(self.training, self.output, n_epoch=epochs,
                        batch_size=batch_size, show_metric=show_metric)
 
-        self.model_trained = True
-
     def save_model(self, file_name="model.tflearn"):
         self.model.save(file_name)
-        self.model_saved = True
-
-    def show_metrics(self):
-        print("---------")
-        print("METRICS:")
-        print(f"Model Saved: {self.model_saved}")
-        print(f"Loaded Intents File: {self.loaded_intent}")
-        print(f"Model Trained: {self.model_trained}")
-        print(f"Loaded Model Data: {self.loaded_model_data}")
-        print("---------")
 
     def _bag_of_words(self, s, words):
         bag = [0 for _ in range(len(words))]
@@ -165,47 +148,10 @@ class ChatBot:
         else:
             return "I didn't understand"
 
-    def chat(self):
-        print("Start talking with the bot (type quit to stop)!")
-        self.chat_history.append(
-            "Chatbot -" + "Start talking with the bot (type quit to stop)!")
-
-        while True:
-            inp = input("You: ")
-            self.chat_history.append("User -" + inp)
-            if inp.lower() == "quit":
-                break
-
-            results = self.model.predict(
-                [self._bag_of_words(inp, self.words)])[0]
-            results_index = numpy.argmax(results)
-            tag = self.labels[results_index]
-
-            if results[results_index] > 0.4:
-                for tg in self.data["intents"]:
-                    if tg['tag'] == tag:
-                        responses = tg['responses']
-
-                resp = random.choice(responses)
-                print(resp)
-                self.chat_history.append("Chatbot -" + resp)
-
-            else:
-                print("I didn't understand")
-                self.chat_history.append("Chatbot -" + "I didn't understand")
-
-    def save_chat(self, file_name):
-        with open(file_name, "a") as chat_file:
-            chat_file.write("\n".join(self.chat_history))
-
 
 chat_bot = ChatBot()
 
 chat_bot.load_intents(
-    file_name=os.path.join("chat", "intents.json"))
-chat_bot.load_data(file_name=os.path.join("chat", "data.pickle"))
-chat_bot.load_model(file_name=os.path.join("chat", "model.tflearn"))
-
-
-if __name__ == '__main__':
-    chat_bot.chat()
+    file_name=os.path.join("chat", "intents", "intents.json"))
+chat_bot.load_data(file_name=os.path.join("chat", "data", "data.pickle"))
+chat_bot.load_model(file_name=os.path.join("chat", "model", "model.tflearn"))
