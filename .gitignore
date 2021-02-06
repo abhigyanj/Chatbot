@@ -3,3 +3,7 @@
 Procfile
 runtime.txt
 nltk.txt
+
+# VS Code
+
+.vscode/*
