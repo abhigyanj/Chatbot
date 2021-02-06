@@ -1,0 +1,91 @@
+{
+  "intents": [
+    {
+      "tag": 10142780944157070895172234609595417510,
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Hi bot",
+        "Hi Chatbot",
+        "hello bot",
+        "hello chatbot"
+      ],
+      "responses": [
+        "Hi there, get started by asking me questions"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": 10142782345257070895172234609595417510,
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "Bye bot",
+        "Goodbye Chatbot",
+        "Bye bot",
+        "Goodbye chatbot"
+      ],
+      "responses": [
+        "Bye, it was nice talking with you"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": 10142780944157070893452234609595417510,
+      "patterns": [
+        "What time are you open",
+        "What time is you shop open",
+        "What time open",
+        "When time are you open",
+        "When time is you shop open",
+        "When time open"
+      ],
+      "responses": [
+        "We are open 24/7"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": 101427802452345070893452234609595417510,
+      "patterns": [
+        "What do sell",
+        "What items you sell",
+        "What do you sell",
+        "what can i buy at your shop",
+        "what can i buy"
+      ],
+      "responses": [
+        "We sell Python Programs"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": 10142780223423445070893452234609595417510,
+      "patterns": [
+        "where are you",
+        "where is your shop",
+        "what location",
+        "where are you located",
+        "where is your location"
+      ],
+      "responses": [
+        "We are located in Japan, Tokyo"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": 10142780234210423445070893452234609595417510,
+      "patterns": [
+        "what name",
+        "what is your name",
+        "what company name",
+        "name of company",
+        "name of your company"
+      ],
+      "responses": [
+        "Our company is named Python Sellers"
+      ],
+      "context_set": ""
+    }
+  ]
+}
