@@ -152,6 +152,6 @@ class ChatBot:
 chat_bot = ChatBot()
 
 chat_bot.load_intents(
-    file_name=os.path.join("chat", "intents", "intents.json"))
+    file_name=os.path.join("chat", "intent", "intents.json"))
 chat_bot.load_data(file_name=os.path.join("chat", "data", "data.pickle"))
 chat_bot.load_model(file_name=os.path.join("chat", "model", "model.tflearn"))
