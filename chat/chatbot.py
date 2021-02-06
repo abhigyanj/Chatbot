@@ -10,6 +10,9 @@ from nltk.stem.lancaster import LancasterStemmer
 from tensorflow.python.framework import ops
 
 
+nltk.download('punkt')  # Needed for NLTK
+
+
 class ChatBot:
     def __init__(self):
         """
